@@ -8,17 +8,26 @@
 
 import Cocoa
 
-class ViewController: NSViewController {
+class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
 
-	override var representedObject: Any? {
-		didSet {
-		// Update the view, if already loaded.
-		}
+	@IBOutlet weak var tableView: NSTableView!
+	
+	override func loadView()
+	{
+		super.loadView()
+		
+		tableView.rowHeight = 70
+		tableView.addSubview(DeviceCellView())
 	}
-
+	
+	func numberOfRows(in tableView: NSTableView) -> Int
+	{
+		return 20
+	}
 
 	@IBAction func openSourceCode(_ sender: NSButton)
 	{
+		// open up the source page for this project
 		NSWorkspace.shared().open(URL(string: "https://github.com/vgmoose/openbackupextractor")!)
 	}
 }
