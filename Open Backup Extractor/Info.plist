@@ -23,7 +23,7 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2017 VGMoose. All rights reserved.</string>
+	<string>Written by VGMoose in 2017. Licensed under GPLv3. Source code available at github.com/vgmoose/openbackupextractor</string>
 	<key>NSMainStoryboardFile</key>
 	<string>Main</string>
 	<key>NSPrincipalClass</key>

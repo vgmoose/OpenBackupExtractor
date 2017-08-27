@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11134"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -653,41 +655,230 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Open_Backup_Extractor" customModuleProvider="target"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="0.0"/>
+            <point key="canvasLocation" x="51" y="-99"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="Open Backup Extractor" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+                        <rect key="contentRect" x="585" y="558" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <value key="minSize" type="size" width="480" height="270"/>
                     </window>
                     <connections>
-                        <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
+                        <segue destination="FLS-lM-3UU" kind="relationship" relationship="window.shadowedContentViewController" id="cxb-5E-5Xx"/>
                     </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="250"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="hIz-AP-VOD">
+        <!--Split View Controller-->
+        <scene sceneID="beM-MT-pcl">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <splitViewController id="FLS-lM-3UU" sceneMemberID="viewController">
+                    <splitViewItems>
+                        <splitViewItem id="iCe-Ar-ZdP"/>
+                        <splitViewItem id="vOD-fL-So4"/>
+                    </splitViewItems>
+                    <splitView key="splitView" dividerStyle="thin" vertical="YES" id="l4q-U8-SKJ">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
+                    </splitView>
+                    <connections>
+                        <segue destination="mth-eN-God" kind="relationship" relationship="splitItems" id="aYG-oP-Y0A"/>
+                        <segue destination="gdi-JS-7FY" kind="relationship" relationship="splitItems" id="VD3-CY-eB1"/>
+                    </connections>
+                </splitViewController>
+                <customObject id="fgF-Cr-3h1" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="kIt-N3-h8u">
+            <objects>
+                <viewController id="mth-eN-God" sceneMemberID="viewController">
+                    <scrollView key="view" wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="99" horizontalPageScroll="10" verticalLineScroll="99" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="iD7-K8-GrC">
+                        <rect key="frame" x="0.0" y="0.0" width="202" height="300"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <clipView key="contentView" id="reh-Rc-Hjc">
+                            <rect key="frame" x="1" y="1" width="200" height="298"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="98" rowSizeStyle="automatic" viewBased="YES" id="3UT-wa-SPh">
+                                    <rect key="frame" x="0.0" y="0.0" width="200" height="298"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <size key="intercellSpacing" width="1" height="1"/>
+                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                    <tableColumns>
+                                        <tableColumn width="199" minWidth="40" maxWidth="1000" id="gDS-kl-Cz2">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="nOo-sB-m6H">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <prototypeCellViews>
+                                                <tableCellView misplaced="YES" id="xON-ft-ONA" customClass="DeviceCellView" customModule="Open_Backup_Extractor" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="199" height="98"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1rb-dL-f3A">
+                                                            <rect key="frame" x="3" y="3" width="72" height="91"/>
+                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="iPhone7,1" id="18C-Vu-j0r"/>
+                                                        </imageView>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ykw-VS-z0g">
+                                                            <rect key="frame" x="81" y="77" width="117" height="17"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="My iPhone" id="9r9-7S-E7h">
+                                                                <font key="font" metaFont="systemBold"/>
+                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4AS-oY-XyF">
+                                                            <rect key="frame" x="81" y="52" width="58" height="17"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iPhone 6" id="Ucf-kW-Bm5">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YCv-zC-3Os">
+                                                            <rect key="frame" x="81" y="27" width="63" height="17"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iOS 10.1.3" id="gBw-xj-G18">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dng-GY-CgA">
+                                                            <rect key="frame" x="81" y="3" width="88" height="17"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="C9H0382402" id="eji-HF-8L5">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="YCv-zC-3Os" firstAttribute="top" secondItem="4AS-oY-XyF" secondAttribute="bottom" constant="3" id="3v6-1Z-EyC"/>
+                                                        <constraint firstItem="4AS-oY-XyF" firstAttribute="leading" secondItem="1rb-dL-f3A" secondAttribute="trailing" constant="2" id="DS5-Mc-U78"/>
+                                                        <constraint firstItem="4AS-oY-XyF" firstAttribute="top" secondItem="Ykw-VS-z0g" secondAttribute="bottom" constant="3" id="JLl-dS-FXw"/>
+                                                        <constraint firstItem="1rb-dL-f3A" firstAttribute="leading" secondItem="xON-ft-ONA" secondAttribute="leading" id="NY6-mT-u9U"/>
+                                                        <constraint firstItem="YCv-zC-3Os" firstAttribute="leading" secondItem="1rb-dL-f3A" secondAttribute="trailing" constant="2" id="brO-hk-Usg"/>
+                                                        <constraint firstItem="1rb-dL-f3A" firstAttribute="top" secondItem="xON-ft-ONA" secondAttribute="top" id="c8t-ND-g89"/>
+                                                        <constraint firstItem="Ykw-VS-z0g" firstAttribute="leading" secondItem="1rb-dL-f3A" secondAttribute="trailing" constant="2" id="e7r-X6-7gI"/>
+                                                        <constraint firstItem="dng-GY-CgA" firstAttribute="leading" secondItem="1rb-dL-f3A" secondAttribute="trailing" constant="2" id="eXV-dl-c1N"/>
+                                                        <constraint firstItem="Ykw-VS-z0g" firstAttribute="top" secondItem="xON-ft-ONA" secondAttribute="top" constant="4" id="ebh-cP-GXU"/>
+                                                        <constraint firstItem="dng-GY-CgA" firstAttribute="top" secondItem="YCv-zC-3Os" secondAttribute="bottom" constant="3" id="q8h-vE-hRu"/>
+                                                        <constraint firstAttribute="bottom" secondItem="1rb-dL-f3A" secondAttribute="bottom" id="zJc-of-JCF"/>
+                                                    </constraints>
+                                                </tableCellView>
+                                            </prototypeCellViews>
+                                        </tableColumn>
+                                    </tableColumns>
+                                </tableView>
+                            </subviews>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="fra-cp-x0k">
+                            <rect key="frame" x="1" y="109.64993286132812" width="219.572265625" height="16"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="3KH-GP-NmP">
+                            <rect key="frame" x="224" y="17" width="15" height="102"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
+                </viewController>
+                <customObject id="7Rc-wR-aJf" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-174" y="1109"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="uuH-fw-xSG">
+            <objects>
+                <viewController id="gdi-JS-7FY" customClass="ViewController" customModule="Open_Backup_Extractor" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="FJs-fC-qIh">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a0g-8j-Esq">
+                                <rect key="frame" x="98" y="231" width="215" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="by vgmoose" id="YBk-pc-kiE">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="daw-ER-2cn">
+                                <rect key="frame" x="340" y="41" width="104" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="GPLv3 License" id="hnN-AP-wkr">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sK5-14-66F">
+                                <rect key="frame" x="71" y="116" width="308" height="67"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" id="63l-iF-dAb">
+                                    <font key="font" metaFont="system" size="24"/>
+                                    <string key="title">1. Perform backup in iTunes
+2. Select device on the left</string>
+                                    <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u2D-rh-e2T">
+                                <rect key="frame" x="334" y="5" width="117" height="32"/>
+                                <buttonCell key="cell" type="push" title="Source code" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ryi-DS-0IX">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="openSourceCode:" target="gdi-JS-7FY" id="elh-VL-EfU"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Qn-Qr-9JL">
+                                <rect key="frame" x="98" y="265" width="215" height="24"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Open Backup Extractor" id="fdQ-w3-2DL">
+                                    <font key="font" metaFont="system" size="20"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="5Qn-Qr-9JL" firstAttribute="top" secondItem="FJs-fC-qIh" secondAttribute="top" constant="10" id="3Fa-ax-XaA"/>
+                            <constraint firstAttribute="trailing" secondItem="u2D-rh-e2T" secondAttribute="trailing" constant="10" id="AGq-Xj-j6m"/>
+                            <constraint firstAttribute="bottom" secondItem="u2D-rh-e2T" secondAttribute="bottom" constant="10" id="CbE-Fs-Up6"/>
+                            <constraint firstItem="sK5-14-66F" firstAttribute="centerY" secondItem="FJs-fC-qIh" secondAttribute="centerY" id="DvL-Oj-lAe"/>
+                            <constraint firstAttribute="trailing" secondItem="daw-ER-2cn" secondAttribute="trailing" constant="10" id="HWZ-1u-0vc"/>
+                            <constraint firstItem="a0g-8j-Esq" firstAttribute="centerX" secondItem="FJs-fC-qIh" secondAttribute="centerX" id="L0z-R2-8Lt"/>
+                            <constraint firstItem="u2D-rh-e2T" firstAttribute="top" secondItem="daw-ER-2cn" secondAttribute="bottom" constant="8" id="VmK-wU-Teb"/>
+                            <constraint firstItem="a0g-8j-Esq" firstAttribute="top" secondItem="5Qn-Qr-9JL" secondAttribute="bottom" constant="4" id="k1Q-5c-pxb"/>
+                            <constraint firstAttribute="trailing" secondItem="daw-ER-2cn" secondAttribute="trailing" constant="10" id="mJx-fJ-6cR"/>
+                            <constraint firstItem="sK5-14-66F" firstAttribute="centerX" secondItem="FJs-fC-qIh" secondAttribute="centerX" id="pUp-b9-4oc"/>
+                            <constraint firstItem="5Qn-Qr-9JL" firstAttribute="centerX" secondItem="FJs-fC-qIh" secondAttribute="centerX" id="zSU-Yi-gKR"/>
+                        </constraints>
                     </view>
                 </viewController>
-                <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="edl-R9-w8g" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="636" y="733"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="iPhone7,1" width="320" height="320"/>
+    </resources>
 </document>

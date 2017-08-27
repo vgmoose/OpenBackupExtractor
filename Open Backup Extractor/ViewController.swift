@@ -23,5 +23,9 @@ class ViewController: NSViewController {
 	}
 
 
+	@IBAction func openSourceCode(_ sender: NSButton)
+	{
+		NSWorkspace.shared().open(URL(string: "https://github.com/vgmoose/openbackupextractor")!)
+	}
 }
 
