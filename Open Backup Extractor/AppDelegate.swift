@@ -11,7 +11,7 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-
+	var mainViewController: ViewController?
 
 	func applicationDidFinishLaunching(_ aNotification: Notification)
 	{

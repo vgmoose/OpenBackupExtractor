@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C1F658F1F529D9F0095092B /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1F658E1F529D9F0095092B /* Device.swift */; };
 		9CA9D6681F52173200BE1277 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA9D6671F52173200BE1277 /* AppDelegate.swift */; };
 		9CA9D66A1F52173200BE1277 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA9D6691F52173200BE1277 /* ViewController.swift */; };
 		9CA9D66C1F52173200BE1277 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CA9D66B1F52173200BE1277 /* Assets.xcassets */; };
@@ -70,6 +71,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9C1F658E1F529D9F0095092B /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		9CA9D6641F52173200BE1277 /* Open Backup Extractor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Open Backup Extractor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CA9D6671F52173200BE1277 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9CA9D6691F52173200BE1277 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				9CA9D6671F52173200BE1277 /* AppDelegate.swift */,
 				9CA9D6691F52173200BE1277 /* ViewController.swift */,
 				9CA9D6761F5243A000BE1277 /* DeviceCellView.swift */,
+				9C1F658E1F529D9F0095092B /* Device.swift */,
 				9CA9D66B1F52173200BE1277 /* Assets.xcassets */,
 				9CA9D66D1F52173200BE1277 /* Main.storyboard */,
 				9CA9D6701F52173200BE1277 /* Info.plist */,
@@ -375,6 +378,7 @@
 				9CA9D6771F5243A000BE1277 /* DeviceCellView.swift in Sources */,
 				9CA9D66A1F52173200BE1277 /* ViewController.swift in Sources */,
 				9CA9D6681F52173200BE1277 /* AppDelegate.swift in Sources */,
+				9C1F658F1F529D9F0095092B /* Device.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +533,7 @@
 				9CA9D6751F52173200BE1277 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
