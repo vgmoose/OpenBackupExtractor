@@ -16,7 +16,7 @@ class DeviceCellView : NSTableCellView
 	@IBOutlet weak var dateField: NSTextField!
 	@IBOutlet weak var serialField: NSTextField!
 	@IBOutlet weak var icon: NSImageView!
-	
+
 	func loadFromDevice(_ device : Device)
 	{
 		super.awakeFromNib()
@@ -25,10 +25,14 @@ class DeviceCellView : NSTableCellView
 		nameField.stringValue = device.name
 		modelField.stringValue = device.model
 		dateField.stringValue = device.date
-		serialField.stringValue = device.serial
+		serialField.stringValue = device.serial //"CSU123456789"
 		
 		// update the ImageView based on the raw model
-		icon.image = NSImage(named: device.rawModel)!
+		let image = NSImage(named: device.rawModel)
+		if image != nil
+		{
+			icon.image = image!
+		}
 	}
 
 	override func awakeFromNib()

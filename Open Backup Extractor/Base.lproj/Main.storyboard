@@ -683,9 +683,10 @@
         <!--View Controller-->
         <scene sceneID="uuH-fw-xSG">
             <objects>
+                <customObject id="edl-R9-w8g" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <viewController id="gdi-JS-7FY" customClass="ViewController" customModule="Open_Backup_Extractor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="FJs-fC-qIh">
-                        <rect key="frame" x="0.0" y="0.0" width="675" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="676" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="102" horizontalPageScroll="10" verticalLineScroll="102" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TnT-Rl-2DF">
@@ -694,7 +695,7 @@
                                     <rect key="frame" x="1" y="1" width="200" height="298"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="101" rowSizeStyle="automatic" viewBased="YES" id="Vf2-89-ZM7">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="101" rowSizeStyle="automatic" viewBased="YES" id="Vf2-89-ZM7" customClass="DeviceTableView" customModule="Open_Backup_Extractor" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="298"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="1" height="1"/>
@@ -802,8 +803,8 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Ewr-6a-nKv">
-                                <rect key="frame" x="203" y="0.0" width="472" height="300"/>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Ewr-6a-nKv" customClass="RighthandSideView" customModule="Open_Backup_Extractor" customModuleProvider="target">
+                                <rect key="frame" x="204" y="0.0" width="472" height="300"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="daw-ER-2cn">
                                         <rect key="frame" x="366" y="39" width="98" height="17"/>
@@ -855,6 +856,9 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="refeshButton:" target="gdi-JS-7FY" id="PSO-78-tbC"/>
+                                        </connections>
                                     </button>
                                     <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tKn-Aw-bwI">
                                         <rect key="frame" x="8" y="36" width="25" height="25"/>
@@ -862,22 +866,94 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="getHelp:" target="gdi-JS-7FY" id="bJY-bq-Zwv"/>
+                                        </connections>
                                     </button>
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RmW-hn-XS3">
+                                        <rect key="frame" x="61" y="203" width="218" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="218" id="GTR-B1-8Er"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="Select Folder for Exported Files..." drawsBackground="YES" id="gLf-ba-APS">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rXV-um-ioc">
+                                        <rect key="frame" x="289" y="197" width="129" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Choose Folder" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kFq-tM-dQf">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="chooseExportFolder:" target="gdi-JS-7FY" id="Kf9-zm-tOF"/>
+                                        </connections>
+                                    </button>
+                                    <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VGv-sC-ZKd">
+                                        <rect key="frame" x="113" y="88" width="114" height="91"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <clipView key="contentView" ambiguous="YES" id="fP8-jV-R7G">
+                                            <rect key="frame" x="1" y="1" width="112" height="89"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" id="sYI-ec-Ckd">
+                                                    <rect key="frame" x="0.0" y="0.0" width="112" height="89"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <size key="intercellSpacing" width="3" height="2"/>
+                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                                    <tableColumns>
+                                                        <tableColumn width="109" minWidth="40" maxWidth="1000" id="TJO-9Z-GLL">
+                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                                                <font key="font" metaFont="smallSystem"/>
+                                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                            </tableHeaderCell>
+                                                            <buttonCell key="dataCell" type="check" title="Check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="qXi-5Q-r3c">
+                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="system"/>
+                                                            </buttonCell>
+                                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                        </tableColumn>
+                                                    </tableColumns>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="Ewr-6a-nKv" id="WQA-1d-mrO"/>
+                                                        <outlet property="delegate" destination="Ewr-6a-nKv" id="ktL-J9-gTJ"/>
+                                                    </connections>
+                                                </tableView>
+                                            </subviews>
+                                        </clipView>
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="EXD-NN-lBb">
+                                            <rect key="frame" x="1" y="119" width="223" height="15"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="pAL-Dg-jwL">
+                                            <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                    </scrollView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="v9f-kJ-HPg" firstAttribute="top" secondItem="tKn-Aw-bwI" secondAttribute="bottom" constant="8" id="4h4-Zg-b0F"/>
+                                    <constraint firstItem="RmW-hn-XS3" firstAttribute="top" secondItem="a0g-8j-Esq" secondAttribute="bottom" constant="20" id="8wC-fF-5Pg"/>
                                     <constraint firstItem="u2D-rh-e2T" firstAttribute="top" secondItem="daw-ER-2cn" secondAttribute="bottom" constant="8" id="99X-dR-L4b"/>
                                     <constraint firstAttribute="trailing" secondItem="u2D-rh-e2T" secondAttribute="trailing" constant="10" id="A2r-hQ-3jj"/>
                                     <constraint firstAttribute="bottom" secondItem="v9f-kJ-HPg" secondAttribute="bottom" constant="10" id="CM0-LC-5Lk"/>
+                                    <constraint firstItem="rXV-um-ioc" firstAttribute="leading" secondItem="RmW-hn-XS3" secondAttribute="trailing" constant="16" id="FA6-dJ-bhe"/>
                                     <constraint firstItem="a0g-8j-Esq" firstAttribute="centerX" secondItem="Ewr-6a-nKv" secondAttribute="centerX" id="JcL-3f-l7b"/>
                                     <constraint firstItem="5Qn-Qr-9JL" firstAttribute="top" secondItem="Ewr-6a-nKv" secondAttribute="top" constant="10" id="KYh-Ao-jiF"/>
                                     <constraint firstAttribute="width" constant="472" id="L6t-OJ-krj"/>
                                     <constraint firstItem="a0g-8j-Esq" firstAttribute="top" secondItem="5Qn-Qr-9JL" secondAttribute="bottom" constant="4" id="M2Q-F0-ENh"/>
                                     <constraint firstItem="sK5-14-66F" firstAttribute="centerX" secondItem="Ewr-6a-nKv" secondAttribute="centerX" id="Qwo-NV-wIW"/>
                                     <constraint firstItem="5Qn-Qr-9JL" firstAttribute="centerX" secondItem="Ewr-6a-nKv" secondAttribute="centerX" id="U3i-iv-LwM"/>
+                                    <constraint firstAttribute="trailing" secondItem="rXV-um-ioc" secondAttribute="trailing" constant="60" id="dIs-rS-8jG"/>
                                     <constraint firstItem="sK5-14-66F" firstAttribute="centerY" secondItem="Ewr-6a-nKv" secondAttribute="centerY" id="f33-lY-pVh"/>
                                     <constraint firstAttribute="bottom" secondItem="u2D-rh-e2T" secondAttribute="bottom" constant="10" id="fXn-rZ-ahz"/>
                                     <constraint firstItem="v9f-kJ-HPg" firstAttribute="leading" secondItem="Ewr-6a-nKv" secondAttribute="leading" constant="10" id="iQa-xx-HFq"/>
+                                    <constraint firstItem="rXV-um-ioc" firstAttribute="top" secondItem="5Qn-Qr-9JL" secondAttribute="bottom" constant="41" id="mLC-C7-otV"/>
+                                    <constraint firstItem="RmW-hn-XS3" firstAttribute="leading" secondItem="Ewr-6a-nKv" secondAttribute="leading" constant="61" id="tAf-5l-Krv"/>
                                     <constraint firstAttribute="trailing" secondItem="daw-ER-2cn" secondAttribute="trailing" constant="10" id="vx8-lD-IIz"/>
                                     <constraint firstItem="tKn-Aw-bwI" firstAttribute="leading" secondItem="Ewr-6a-nKv" secondAttribute="leading" constant="10" id="zQr-Dg-wzT"/>
                                 </constraints>
@@ -893,13 +969,14 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="exportFolderPathField" destination="RmW-hn-XS3" id="H2c-ge-ivr"/>
+                        <outlet property="placeholderText" destination="sK5-14-66F" id="NSg-dy-aaz"/>
                         <outlet property="tableView" destination="Vf2-89-ZM7" id="5yx-GO-Djp"/>
                         <outlet property="view" destination="FJs-fC-qIh" id="a0Y-Ta-DUg"/>
                     </connections>
                 </viewController>
-                <customObject id="edl-R9-w8g" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="748.5" y="733"/>
+            <point key="canvasLocation" x="861" y="733"/>
         </scene>
     </scenes>
     <resources>

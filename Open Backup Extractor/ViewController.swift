@@ -13,14 +13,20 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 	// the table view link from story board
 	@IBOutlet weak var tableView: NSTableView!
 	
+	// the dim text before a device is selected
+	@IBOutlet weak var placeholderText: NSTextField!
+	
 	// the list of all devices
 	var devices: [Device] = []
 	
 	// the path to the itunes library
-	let ITUNES_BACKUP_PATH = "/Users/Ricky/Library/Application Support/MobileSync/Backup/"
+	let ITUNES_BACKUP_PATH = NSHomeDirectory() + "/Library/Application Support/MobileSync/Backup/"
 	
 	// the number of cell that is being loaded
 	var curentCellIndex = 0
+	
+	// the textbox that displays the selected export path
+	@IBOutlet weak var exportFolderPathField: NSTextField!
 	
 	override func loadView()
 	{
@@ -35,8 +41,28 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 		
 		// refresh the device list on the first launch
 		refreshDevices()
+		
+		self.tableView.action = #selector(onItemClicked)
+
+	}
+	
+	@objc private func onItemClicked()
+	{
+		// hide the placeholder text
+		self.placeholderText.isHidden = true
 	}
 
+	@IBAction func getHelp(_ sender: Any) {
+			dialog("Open Backup Extractor", "I made this tool out of frustration with existing solutions that all wanted to charge money to export files, specifically voicemails.\n\nThe idea is you perform a backup of the iOS device in iTunes, and then run this application or hit refresh. It should appear alongside the left hand side.\n\nWhen you choose it, you can then select the types of files that you want to extract from the backup. These are located in \"~/Library/Application Support/MobileSync/Backup/\".\n\nThis tool only copies the files of certain types from that folder into a destination folder that you specify.\n\nIt is limited in functionality, but it should get the job done! If you encounter any issue, please contact me or file an issue on Github (see the source code).")
+	}
+	
+	@IBAction func refeshButton(_ sender: NSButton) {
+		
+		// clear the device list
+		self.devices = []
+		refreshDevices();
+	}
+	
 	func refreshDevices()
 	{
 		do
@@ -72,6 +98,20 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 			// do nothing, the file list will be empty
 		}
 		
+	}
+	
+	@IBAction func chooseExportFolder(_ sender: NSButton)
+	{
+		let openPanel = NSOpenPanel()
+		openPanel.allowsMultipleSelection = false
+		openPanel.canChooseDirectories = true
+		openPanel.canCreateDirectories = true
+		openPanel.canChooseFiles = false
+		openPanel.begin { (result) -> Void in
+			if result == NSFileHandlingPanelOKButton {
+				self.exportFolderPathField.stringValue = (openPanel.url?.absoluteString)!
+			}
+		}
 	}
 	
 	func reloadData()
