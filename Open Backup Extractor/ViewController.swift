@@ -28,6 +28,24 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 	// the textbox that displays the selected export path
 	@IBOutlet weak var exportFolderPathField: NSTextField!
 	
+	// the button to select the export path
+	@IBOutlet weak var chooseFolderButton: NSButton!
+	
+	// exportable file types
+	@IBOutlet weak var exportables: NSScrollView!
+	
+	// second placeholder text
+	@IBOutlet weak var placeholder2: NSTextField!
+	
+	// the export folder button
+	@IBOutlet weak var exportButton: NSButton!
+	
+	// the toggles
+	@IBOutlet weak var container: NSView!
+	
+	// the variables for the state the UI should be in
+	let NONE_SELECTED = 0, DEVICE_SELECTED = 1, PATH_SELECTED = 2, EXPORT_SELECTED = 3
+	
 	override func loadView()
 	{
 		super.loadView()
@@ -43,13 +61,15 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 		refreshDevices()
 		
 		self.tableView.action = #selector(onItemClicked)
+		
+//		rightHandSideView.setLabels(exportableDevices)
 
 	}
 	
 	@objc private func onItemClicked()
 	{
 		// hide the placeholder text
-		self.placeholderText.isHidden = true
+		changeState(DEVICE_SELECTED)
 	}
 
 	@IBAction func getHelp(_ sender: Any) {
@@ -92,12 +112,70 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 			
 			// reload the table view
 			reloadData()
+			
+			// enter state 1 for view
+			changeState(NONE_SELECTED)
 		}
 		catch
 		{
 			// do nothing, the file list will be empty
 		}
 		
+	}
+	
+	func changeState(_ state: Int)
+	{
+		if state == NONE_SELECTED
+		{
+			self.placeholderText.isHidden = false
+			self.exportFolderPathField.isHidden = true
+			self.chooseFolderButton.isHidden = true
+			self.container.isHidden = true
+			self.exportButton.isHidden = true
+			self.placeholder2.isHidden = true
+
+		}
+		else if state == DEVICE_SELECTED
+		{
+			self.placeholderText.isHidden = true
+			self.exportFolderPathField.isHidden = false
+			self.chooseFolderButton.isHidden = false
+			self.container.isHidden = true
+			self.exportButton.isHidden = true
+			self.placeholder2.isHidden = false
+		}
+		else if state == PATH_SELECTED
+		{
+			self.placeholderText.isHidden = true
+			self.exportFolderPathField.isHidden = false
+			self.chooseFolderButton.isHidden = false
+			self.container.isHidden = false
+			self.exportButton.isHidden = false
+			self.placeholder2.isHidden = true
+			
+			self.exportFolderPathField.isEnabled = true
+			self.chooseFolderButton.isEnabled = true
+//			self.exportables.isEnabled = true
+		}
+		else if state == EXPORT_SELECTED
+		{
+			self.placeholderText.isHidden = true
+			self.exportFolderPathField.isHidden = false
+			self.chooseFolderButton.isHidden = false
+			self.container.isHidden = false
+			self.exportButton.isHidden = false
+			self.placeholder2.isHidden = true
+			
+			self.exportFolderPathField.isEnabled = false
+			self.chooseFolderButton.isEnabled = false
+//			self.container.isEnabled = false
+
+		}
+	}
+	
+	@IBAction func exportClicked(_ sender: Any)
+	{
+		Swift.print("Export clicked")
 	}
 	
 	@IBAction func chooseExportFolder(_ sender: NSButton)
@@ -110,6 +188,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 		openPanel.begin { (result) -> Void in
 			if result == NSFileHandlingPanelOKButton {
 				self.exportFolderPathField.stringValue = (openPanel.url?.absoluteString)!
+				self.changeState(self.PATH_SELECTED)
 			}
 		}
 	}
