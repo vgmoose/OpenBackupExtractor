@@ -175,7 +175,11 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 	
 	@IBAction func exportClicked(_ sender: Any)
 	{
-		Swift.print("Export clicked")
+		// grab the currently selected device, and request it to export all its files
+		let selectedDevice = self.devices[tableView.selectedRow]
+		Swift.print(devices)
+		
+		Swift.print(selectedDevice.name)
 	}
 	
 	@IBAction func chooseExportFolder(_ sender: NSButton)
