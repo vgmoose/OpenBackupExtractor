@@ -15,11 +15,14 @@ class Device
 	var date = "Jul 14, 2017 6:40 PM"
 	var serial = "US123456789"
 	var rawModel = "iPhone7,1"
+    var path = "/"
 	
 	func load(_ path: String) -> Bool
 	{
 		// the Manifest.plist path
 		let manifestPath = path + "/Manifest.plist"
+        
+        self.path = path
 		
 		if !FileManager.default.fileExists(atPath: manifestPath)
 		{

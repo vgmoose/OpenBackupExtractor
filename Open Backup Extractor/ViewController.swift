@@ -15,8 +15,16 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 	
 	// the dim text before a device is selected
 	@IBOutlet weak var placeholderText: NSTextField!
-	
-	// the list of all devices
+    
+    // the view containing the exportable types
+    @IBOutlet weak var listContainer: NSView!
+    
+    // the progress of files being copied
+    @IBOutlet weak var progressBar: NSProgressIndicator!
+    
+    var selectableView: SelectableTypesView?
+    
+    // the list of all devices
 	var devices: [Device] = []
 	
 	// the path to the itunes library
@@ -68,6 +76,9 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 	
 	@objc private func onItemClicked()
 	{
+        // if the progress bar is visible, don't change device state
+        if !self.progressBar.isHidden { return }
+        
 		// hide the placeholder text
 		changeState(DEVICE_SELECTED)
 	}
@@ -78,6 +89,9 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 	
 	@IBAction func refeshButton(_ sender: NSButton) {
 		
+        // if the progress bar is visible, don't refresh
+        if !self.progressBar.isHidden { return }
+        
 		// clear the device list
 		self.devices = []
 		refreshDevices();
@@ -133,6 +147,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 			self.container.isHidden = true
 			self.exportButton.isHidden = true
 			self.placeholder2.isHidden = true
+            self.progressBar.isHidden = true
 
 		}
 		else if state == DEVICE_SELECTED
@@ -143,6 +158,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 			self.container.isHidden = true
 			self.exportButton.isHidden = true
 			self.placeholder2.isHidden = false
+            self.progressBar.isHidden = true
 		}
 		else if state == PATH_SELECTED
 		{
@@ -155,6 +171,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 			
 			self.exportFolderPathField.isEnabled = true
 			self.chooseFolderButton.isEnabled = true
+            self.progressBar.isHidden = true
 //			self.exportables.isEnabled = true
 		}
 		else if state == EXPORT_SELECTED
@@ -163,23 +180,113 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 			self.exportFolderPathField.isHidden = false
 			self.chooseFolderButton.isHidden = false
 			self.container.isHidden = false
-			self.exportButton.isHidden = false
+			self.exportButton.isHidden = true
 			self.placeholder2.isHidden = true
 			
 			self.exportFolderPathField.isEnabled = false
 			self.chooseFolderButton.isEnabled = false
+            self.progressBar.isHidden = false
 //			self.container.isEnabled = false
 
 		}
 	}
-	
+    
+    override func prepare(for segue: NSStoryboardSegue, sender: Any?)
+    {
+        if sender is SelectableTypesView
+        {
+            self.selectableView = sender as! SelectableTypesView
+        }
+    }
+
 	@IBAction func exportClicked(_ sender: Any)
 	{
+        // enter export state
+        self.changeState(EXPORT_SELECTED)
+        
+        var exportPath = self.exportFolderPathField.stringValue
+        
 		// grab the currently selected device, and request it to export all its files
 		let selectedDevice = self.devices[tableView.selectedRow]
-		Swift.print(devices)
+        
+//        let selectableView = self.selectableView!
 		
-		Swift.print(selectedDevice.name)
+        DispatchQueue.global(qos: .utility).async
+        {
+            do
+            {
+                // get an enumerator for the itunes backup path
+                let files = try FileManager.default.contentsOfDirectory(atPath: selectedDevice.path)
+                
+                let totalFiles = files.count
+                var curCount = 0
+                
+                // go through every folder in that folder (each is two characters)
+                for folder in files
+                {
+                    // update the progress bar
+                    DispatchQueue.main.async {
+                        self.progressBar.doubleValue = Double(100) * (Double(curCount) / Double(totalFiles))
+                    }
+                    curCount += 1
+                    
+                    // check if the current path is a folder
+                    var isDir : ObjCBool = false
+                    var subFolderPath = selectedDevice.path + "/" + folder
+                    FileManager.default.fileExists(atPath: subFolderPath, isDirectory:&isDir)
+                    
+                    if isDir.boolValue
+                    {
+                        var folderFiles = try FileManager.default.contentsOfDirectory(atPath: subFolderPath)
+                        for file in folderFiles
+                        {
+                            var unsortedFilePath = subFolderPath + "/" + file
+                            
+                            // run 'file' on the current file to get the media type
+                            let task = Process()
+                            task.launchPath = "/usr/bin/file"
+                            task.arguments = [unsortedFilePath]
+                            
+                            let pipe = Pipe()
+                            task.standardOutput = pipe
+                            
+                            task.launch()
+                            task.waitUntilExit()
+                            
+                            let data = pipe.fileHandleForReading.readDataToEndOfFile()
+                            let type = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as! String
+                            
+                            var ext = SelectableTypesView.parse(type)
+                            // if the extension exists, copy the file into the destination folder
+                            if ext != nil
+                            {
+                                var targetPath = exportPath + "/" + file + "." + ext!
+                                
+                                if FileManager.default.fileExists(atPath: unsortedFilePath) {
+                                    do {
+                                        try FileManager.default.copyItem(atPath: unsortedFilePath, toPath: targetPath)
+
+                                    } catch {
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                }
+                
+                // enter state 1 for view
+                self.changeState(self.NONE_SELECTED)
+                
+                // reload the table view
+                self.reloadData()
+            }
+            catch
+            {
+                // do nothing, the file list will be empty
+                print("oh no")
+            }
+        }
 	}
 	
 	@IBAction func chooseExportFolder(_ sender: NSButton)
@@ -191,7 +298,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 		openPanel.canChooseFiles = false
 		openPanel.begin { (result) -> Void in
 			if result == NSFileHandlingPanelOKButton {
-				self.exportFolderPathField.stringValue = (openPanel.url?.absoluteString)!
+				self.exportFolderPathField.stringValue = (openPanel.url?.path)!
 				self.changeState(self.PATH_SELECTED)
 			}
 		}
