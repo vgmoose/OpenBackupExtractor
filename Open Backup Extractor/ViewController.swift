@@ -53,6 +53,9 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 	
 	// the variables for the state the UI should be in
 	let NONE_SELECTED = 0, DEVICE_SELECTED = 1, PATH_SELECTED = 2, EXPORT_SELECTED = 3
+    
+    //the last selected row (corresponds to device)
+    var lastSelectedRow = 0
 	
 	override func loadView()
 	{
@@ -69,15 +72,18 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 		refreshDevices()
 		
 		self.tableView.action = #selector(onItemClicked)
-		
-//		rightHandSideView.setLabels(exportableDevices)
-
 	}
 	
 	@objc private func onItemClicked()
 	{
         // if the progress bar is visible, don't change device state
         if !self.progressBar.isHidden { return }
+        
+        // if the selected item isn't in range, don't change device state
+        if tableView.selectedRow < 0 || tableView.selectedRow >= self.devices.count { return }
+        
+        // update the last selected row
+        self.lastSelectedRow = tableView.selectedRow
         
 		// hide the placeholder text
 		changeState(DEVICE_SELECTED)
@@ -148,6 +154,10 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 			self.exportButton.isHidden = true
 			self.placeholder2.isHidden = true
             self.progressBar.isHidden = true
+            
+            self.exportFolderPathField.isEnabled = true
+            self.chooseFolderButton.isEnabled = true
+            self.progressBar.isHidden = true
 
 		}
 		else if state == DEVICE_SELECTED
@@ -193,10 +203,8 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     
     override func prepare(for segue: NSStoryboardSegue, sender: Any?)
     {
-        if sender is SelectableTypesView
-        {
-            self.selectableView = sender as! SelectableTypesView
-        }
+        // the container view should call prepare for segue, and be a selectable types view
+        self.selectableView = ((segue.destinationController as! NSViewController).view as! SelectableTypesView)
     }
 
 	@IBAction func exportClicked(_ sender: Any)
@@ -204,15 +212,21 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         // enter export state
         self.changeState(EXPORT_SELECTED)
         
-        var exportPath = self.exportFolderPathField.stringValue
+        let exportPath = self.exportFolderPathField.stringValue
         
 		// grab the currently selected device, and request it to export all its files
-		let selectedDevice = self.devices[tableView.selectedRow]
+		let selectedDevice = self.devices[self.lastSelectedRow]
         
-//        let selectableView = self.selectableView!
+        if self.selectableView == nil { return }    // container hasn't initialized yet
+        
+        // update internal checkboxes for selected types before continuing
+        self.selectableView!.update()
 		
         DispatchQueue.global(qos: .utility).async
         {
+            // disable all the checkboxes
+            self.selectableView!.setAllState(false)
+            
             do
             {
                 // get an enumerator for the itunes backup path
@@ -220,6 +234,16 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                 
                 let totalFiles = files.count
                 var curCount = 0
+                
+                // MAGIC_MIME tells magic to return a mime of the file
+                let magic_cookie: magic_t = magic_open(MAGIC_NONE)
+                
+                print("Loading default magic database");
+                if (magic_load(magic_cookie, nil) != 0) {
+                    print("cannot load magic database - %s", magic_error(magic_cookie));
+                    magic_close(magic_cookie);
+                    return
+                }
                 
                 // go through every folder in that folder (each is two characters)
                 for folder in files
@@ -229,39 +253,29 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                         self.progressBar.doubleValue = Double(100) * (Double(curCount) / Double(totalFiles))
                     }
                     curCount += 1
-                    
+
                     // check if the current path is a folder
                     var isDir : ObjCBool = false
-                    var subFolderPath = selectedDevice.path + "/" + folder
+                    let subFolderPath = selectedDevice.path + "/" + folder
                     FileManager.default.fileExists(atPath: subFolderPath, isDirectory:&isDir)
-                    
+
                     if isDir.boolValue
                     {
-                        var folderFiles = try FileManager.default.contentsOfDirectory(atPath: subFolderPath)
+                        let folderFiles = try FileManager.default.contentsOfDirectory(atPath: subFolderPath)
                         for file in folderFiles
                         {
-                            var unsortedFilePath = subFolderPath + "/" + file
-                            
-                            // run 'file' on the current file to get the media type
-                            let task = Process()
-                            task.launchPath = "/usr/bin/file"
-                            task.arguments = [unsortedFilePath]
-                            
-                            let pipe = Pipe()
-                            task.standardOutput = pipe
-                            
-                            task.launch()
-                            task.waitUntilExit()
-                            
-                            let data = pipe.fileHandleForReading.readDataToEndOfFile()
-                            let type = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as! String
-                            
-                            var ext = SelectableTypesView.parse(type)
-                            // if the extension exists, copy the file into the destination folder
+                            let unsortedFilePath = subFolderPath + "/" + file
+
+                            // lookup mime_type using magic.h library
+                            let magic_full = magic_file(magic_cookie, unsortedFilePath);
+                            let type = String.init(cString: magic_full!)
+
+                            let ext = self.selectableView!.parse(type)
+                            //lif the extension exists, copy the file into the destination folder
                             if ext != nil
                             {
-                                var targetPath = exportPath + "/" + file + "." + ext!
-                                
+                                let targetPath = exportPath + "/" + file + "." + ext!
+
                                 if FileManager.default.fileExists(atPath: unsortedFilePath) {
                                     do {
                                         try FileManager.default.copyItem(atPath: unsortedFilePath, toPath: targetPath)
@@ -270,9 +284,19 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                                     }
                                 }
                             }
-                            
+
                         }
                     }
+                }
+                
+                magic_close(magic_cookie)
+                
+                DispatchQueue.main.async
+                {
+                    // hide the progress bar (not part of state change, since progress bar's presence prevents state changing)
+                    self.progressBar.isHidden = true
+                    
+                    self.selectableView!.setAllState(true)
                 }
                 
                 // enter state 1 for view
@@ -286,6 +310,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                 // do nothing, the file list will be empty
                 print("oh no")
             }
+            
         }
 	}
 	
@@ -312,7 +337,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 		// reload the actual table view
 		tableView.reloadData()
 	}
-	
+
 	func numberOfRows(in tableView: NSTableView) -> Int
 	{
 		return devices.count

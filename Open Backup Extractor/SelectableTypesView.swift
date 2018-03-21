@@ -12,89 +12,77 @@ import Cocoa
 class SelectableTypesView : NSView
 {
     static let VOICE = 0, IMG = 1, TXT = 2, MUSIC = 3, VIDEO = 4, PDF = 5, DATA = 6, ARC = 7, OTHER = 8
-    static var types = [ "Voicemails (.amr)", "Images (.png, .jpg, .gif, .tif)", "Text (.txt, .doc)", "Music (.mp3, .m4a)", "Videos (.mp4)", "PDF (.pdf)", "Databases (.sqlite3)", "Archives (.zip, .tar)", "Other (.html, .plist, .xml)"]
     
-    // voicemail files
-    static var voicemailFile = "Multi-Rate"
-    static var voicemailExt = "amr"
+    // mapping of file descriptions (from libmagic) to file extensions
+    var fileMaps: [Int:([String], [String])] =
+    [
+        VOICE:  (["Multi-Rate"],                 ["amr"]),
+        IMG:    (["PNG", "JPEG", "GIF", "TIF"],  ["png", "jpg", "gif", "tif"]),
+        TXT:    (["ASCII", "Word", "UTF"],       ["txt", "docx", "txt"]),
+        MUSIC:  (["MPEG", "M4A"],                ["mp3", "m4a"]),
+        VIDEO:  (["MP4", "MOV"],                 ["mp4", "mov"]),
+        PDF:    (["PDF"],                        ["pdf"]),
+        DATA:   (["SQL"],                        ["sqlite"]),
+        ARC:    (["Zip", "tar"],                 ["zip", "tar"]),
+        OTHER:  (["HTML", "property", "XML"],    ["html", "plist", "xml"])
+    ]
     
-    // image files
-    static var pngFile = "PNG", jpgFile = "JPEG", gifFile = "GIF", tifFile = "TIF"
-    static var pngExt = "png", jpgExt = "jpg", gifExt = "gif", tifExt = "tif"
+    // mapping of file types to enabled/disabled
+    var enabledTypes:[Int: Bool] = [:]
     
-    // text files
-    static var asciiFile = "ASCII", wordFile = "Word", utfFile = "UTF"
-    static var asciiExt = "txt", wordExt = "docx", utfExt = "txt"
-    
-    // music files
-    static var mp3File = "MPEG", m4aFile = "M4A"
-    static var mp3Ext = "mp3", m4aExt = "m4a"
-    
-    // video files
-    static var mp4File = "MP4", movFile = "MOV"
-    static var mp4Ext = "mp4", movExt = "mov"
-    
-    // pdf files
-    static var pdfFile = "PDF"
-    static var pdfExt = "pdf"
-    
-    // database files
-    static var sqlFile = "SQL"
-    static var sqlExt = "sqlite"
-    
-    // archive files
-    static var zipFile = "Zip", tarFile = "tar"
-    static var zipExt = "zip", tarExt = "tar"
-    
-    // other files
-    static var htmlFile = "HTML", plistFile = "property", xmlFile = "XML"
-    static var htmlExt = "html", plistExt = "plist", xmlExt = "xml"
-    
-    @objc private func onItemClicked()
+    func enabled(_ type: Int) -> Bool
     {
-
+        // return true/false whether we're supposed to check this type
+        return enabledTypes[type] ?? false
     }
     
-    static func parse(_ type: String) -> String?
+    func parse(_ type: String) -> String?
     {
-        // voicemail check
-        if type.contains(voicemailFile) { return voicemailExt }
+        // for every key in the file maps
+        for (key, value) in fileMaps
+        {
+            // if this checkbox is enabled
+            if enabled(key)
+            {
+                // go through the file descriptions + extensions and check the type
+                let descs = value.0
+                let exts  = value.1
+                for x in 0..<descs.count
+                {
+                    if type.contains(descs[x])
+                    {
+                        // found a matching file type in the description, return the respective extension
+                        return exts[x]
+                    }
+                }
+            }
+        }
         
-        // music
-        if type.contains(m4aFile) { return m4aExt }
-        if type.contains(mp3File) { return mp3Ext }
-        
-        // images
-        if type.contains(pngFile) { return pngExt }
-        if type.contains(gifFile) { return gifExt }
-        if type.contains(jpgFile) { return jpgExt }
-        if type.contains(tifFile) { return tifExt }
-        
-        // video
-        if type.contains(mp4File) { return mp4Ext }
-        if type.contains(movFile) { return movExt }
-        
-        // other
-        if type.contains(htmlFile) { return htmlExt }
-        if type.contains(plistFile) { return plistExt }
-        if type.contains(xmlFile) { return xmlExt }
-        
-        // archive
-        if type.contains(zipFile) { return zipExt }
-        if type.contains(tarFile) { return tarExt }
-        
-        // db
-        if type.contains(sqlFile) { return sqlExt }
-        
-        // pdf
-        if type.contains(pdfFile) { return pdfExt }
-        
-        // text
-        if type.contains(asciiFile) { return asciiExt }
-        if type.contains(wordFile) { return wordExt }
-        if type.contains(utfFile) { return utfExt }
-
         // not a known filetype
         return nil
+    }
+    
+    func setAllState(_ enabled: Bool)
+    {
+        // go through all subviews, and enable/disable them if needed
+        for view in self.subviews
+        {
+            if view is NSButton
+            {
+                (view as! NSButton).isEnabled = enabled
+            }
+        }
+    }
+    
+    func update()
+    {
+        // go through all checkboxes, and update our enabled dictionary appropriately
+        for x in 0..<self.subviews.count        // subviews.count should match the number of static types (9)
+        {
+            if self.subviews[x] is NSButton
+            {
+                enabledTypes[x] = (self.subviews[x] as! NSButton).state == 1
+            }
+        }
     }
 }
