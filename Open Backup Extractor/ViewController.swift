@@ -28,7 +28,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 	var devices: [Device] = []
 	
 	// the path to the itunes library
-	let ITUNES_BACKUP_PATH = NSHomeDirectory() + "/Library/Application Support/MobileSync/Backup/"
+	var ITUNES_BACKUP_PATH = NSHomeDirectory() + "/Library/Application Support/MobileSync/Backup/"
 	
 	// the number of cell that is being loaded
 	var curentCellIndex = 0
@@ -135,15 +135,14 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 			
 			// reload the table view
 			reloadData()
-			
-			// enter state 1 for view
-			changeState(NONE_SELECTED)
 		}
 		catch
 		{
 			// do nothing, the file list will be empty
 		}
 		
+		// enter state 1 for view
+		changeState(NONE_SELECTED)
 	}
 	
 	func changeState(_ state: Int)

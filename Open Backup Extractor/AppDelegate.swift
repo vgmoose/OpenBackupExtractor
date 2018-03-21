@@ -16,7 +16,39 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	func applicationDidFinishLaunching(_ aNotification: Notification)
 	{
 	}
-
+	
+	@IBAction func openHelp(_ sender: NSMenuItem)
+	{
+		self.mainViewController!.getHelp(sender: sender)
+	}
+	
+	func dialogOKCancel(question: String, text: String) -> Bool {
+		let alert = NSAlert()
+		alert.messageText = question
+		alert.informativeText = text
+		alert.alertStyle = NSAlertStyle.warning
+		alert.addButton(withTitle: "OK")
+		alert.addButton(withTitle: "Cancel")
+		return alert.runModal() == NSAlertFirstButtonReturn
+	}
+	
+	@IBAction func promptDirectory(_ sender: Any)
+	{
+		let vc = mainViewController!
+		
+		let openPanel = NSOpenPanel()
+		openPanel.allowsMultipleSelection = false
+		openPanel.canChooseDirectories = true
+		openPanel.canCreateDirectories = true
+		openPanel.canChooseFiles = false
+		openPanel.begin { (result) -> Void in
+			if result == NSFileHandlingPanelOKButton {
+				vc.ITUNES_BACKUP_PATH = "\((openPanel.url?.path)!)/"
+				vc.refreshDevices()
+			}
+		}
+	}
+	
 	func applicationWillTerminate(_ aNotification: Notification) {
 		// Insert code here to tear down your application
 	}
