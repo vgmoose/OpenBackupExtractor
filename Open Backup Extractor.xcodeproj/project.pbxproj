@@ -10,6 +10,8 @@
 		9C1F658F1F529D9F0095092B /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1F658E1F529D9F0095092B /* Device.swift */; };
 		9C1F65911F54FB260095092B /* DeviceTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1F65901F54FB260095092B /* DeviceTableView.swift */; };
 		9C33D8C4202E3304006968DE /* SelectableTypesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C33D8C3202E3304006968DE /* SelectableTypesView.swift */; };
+		9C5BDE872062421B00DFF64C /* libmagic.1.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 9CBBE50020623F6A00A6B003 /* libmagic.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		9C5BDE892062423300DFF64C /* libmagic.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CBBE50020623F6A00A6B003 /* libmagic.1.dylib */; };
 		9CA9D6681F52173200BE1277 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA9D6671F52173200BE1277 /* AppDelegate.swift */; };
 		9CA9D66A1F52173200BE1277 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA9D6691F52173200BE1277 /* ViewController.swift */; };
 		9CA9D66C1F52173200BE1277 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CA9D66B1F52173200BE1277 /* Assets.xcassets */; };
@@ -71,6 +73,20 @@
 		9CA9D6EA1F52461B00BE1277 /* iPod5,1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CA9D6B31F52461B00BE1277 /* iPod5,1.png */; };
 		9CA9D6EB1F52461B00BE1277 /* iPod7,1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CA9D6B41F52461B00BE1277 /* iPod7,1.png */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9CBBE4F6206239F900A6B003 /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9C5BDE872062421B00DFF64C /* libmagic.1.dylib in Embed Libraries */,
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		9C1F658E1F529D9F0095092B /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
@@ -138,6 +154,10 @@
 		9CA9D6B21F52461B00BE1277 /* iPod4,1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPod4,1.png"; sourceTree = "<group>"; };
 		9CA9D6B31F52461B00BE1277 /* iPod5,1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPod5,1.png"; sourceTree = "<group>"; };
 		9CA9D6B41F52461B00BE1277 /* iPod7,1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPod7,1.png"; sourceTree = "<group>"; };
+		9CBBE4EA2061E6EA00A6B003 /* obe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "obe-Bridging-Header.h"; sourceTree = "<group>"; };
+		9CBBE4ED2061FEB200A6B003 /* magic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = magic.h; sourceTree = "<group>"; };
+		9CBBE50020623F6A00A6B003 /* libmagic.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libmagic.1.dylib; sourceTree = "<group>"; };
+		9CBBE50120623F6A00A6B003 /* libmagic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmagic.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C5BDE892062423300DFF64C /* libmagic.1.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +175,7 @@
 		9CA9D65B1F52173200BE1277 = {
 			isa = PBXGroup;
 			children = (
+				9CBBE4FF20623F2300A6B003 /* Frameworks */,
 				9CA9D6661F52173200BE1277 /* Open Backup Extractor */,
 				9CA9D6651F52173200BE1277 /* Products */,
 			);
@@ -176,6 +198,8 @@
 				9CA9D6761F5243A000BE1277 /* DeviceCellView.swift */,
 				9C1F65901F54FB260095092B /* DeviceTableView.swift */,
 				9C33D8C3202E3304006968DE /* SelectableTypesView.swift */,
+				9CBBE4EA2061E6EA00A6B003 /* obe-Bridging-Header.h */,
+				9CBBE4ED2061FEB200A6B003 /* magic.h */,
 				9CA9D66B1F52173200BE1277 /* Assets.xcassets */,
 				9CA9D66D1F52173200BE1277 /* Main.storyboard */,
 				9CA9D6701F52173200BE1277 /* Info.plist */,
@@ -254,6 +278,15 @@
 			path = devices;
 			sourceTree = "<group>";
 		};
+		9CBBE4FF20623F2300A6B003 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9CBBE50020623F6A00A6B003 /* libmagic.1.dylib */,
+				9CBBE50120623F6A00A6B003 /* libmagic.a */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -264,6 +297,7 @@
 				9CA9D6601F52173200BE1277 /* Sources */,
 				9CA9D6611F52173200BE1277 /* Frameworks */,
 				9CA9D6621F52173200BE1277 /* Resources */,
+				9CBBE4F6206239F900A6B003 /* Embed Libraries */,
 			);
 			buildRules = (
 			);
@@ -502,9 +536,15 @@
 				DEVELOPMENT_TEAM = 9UDT7LSCEF;
 				INFOPLIST_FILE = "Open Backup Extractor/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vgmoose.Open-Backup-Extractor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Open Backup Extractor/obe-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -517,9 +557,15 @@
 				DEVELOPMENT_TEAM = 9UDT7LSCEF;
 				INFOPLIST_FILE = "Open Backup Extractor/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vgmoose.Open-Backup-Extractor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Open Backup Extractor/obe-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

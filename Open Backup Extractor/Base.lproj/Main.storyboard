@@ -1013,7 +1013,7 @@
         <scene sceneID="w1C-NR-Opy">
             <objects>
                 <viewController id="jnU-0h-4Of" sceneMemberID="viewController">
-                    <view key="view" id="oic-NA-31i" customClass="SelectableTypesView">
+                    <view key="view" identifier="Checkboxes" id="oic-NA-31i" customClass="SelectableTypesView" customModule="Open_Backup_Extractor" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="318" height="104"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
