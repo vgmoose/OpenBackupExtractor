@@ -61,6 +61,9 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 	{
 		super.loadView()
 		
+		// change directory to this app bundle (so that libmagic can find our magic.mgc file in resources)
+		chdir(Bundle.main.bundlePath)
+		
 		// set this view controller to the app delegate
 		let appDelegate = NSApplication.shared().delegate as! AppDelegate
 		appDelegate.mainViewController = self

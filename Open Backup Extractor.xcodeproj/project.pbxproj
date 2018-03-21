@@ -12,6 +12,7 @@
 		9C33D8C4202E3304006968DE /* SelectableTypesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C33D8C3202E3304006968DE /* SelectableTypesView.swift */; };
 		9C5BDE872062421B00DFF64C /* libmagic.1.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 9CBBE50020623F6A00A6B003 /* libmagic.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		9C5BDE892062423300DFF64C /* libmagic.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CBBE50020623F6A00A6B003 /* libmagic.1.dylib */; };
+		9C5BDE8C2062E88C00DFF64C /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 9C5BDE8B2062E87C00DFF64C /* magic.mgc */; };
 		9CA9D6681F52173200BE1277 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA9D6671F52173200BE1277 /* AppDelegate.swift */; };
 		9CA9D66A1F52173200BE1277 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA9D6691F52173200BE1277 /* ViewController.swift */; };
 		9CA9D66C1F52173200BE1277 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CA9D66B1F52173200BE1277 /* Assets.xcassets */; };
@@ -92,6 +93,7 @@
 		9C1F658E1F529D9F0095092B /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		9C1F65901F54FB260095092B /* DeviceTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceTableView.swift; sourceTree = "<group>"; };
 		9C33D8C3202E3304006968DE /* SelectableTypesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableTypesView.swift; sourceTree = "<group>"; };
+		9C5BDE8B2062E87C00DFF64C /* magic.mgc */ = {isa = PBXFileReference; lastKnownFileType = file; path = magic.mgc; sourceTree = "<group>"; };
 		9CA9D6641F52173200BE1277 /* Open Backup Extractor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Open Backup Extractor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CA9D6671F52173200BE1277 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9CA9D6691F52173200BE1277 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 		9CA9D67C1F52461B00BE1277 /* res */ = {
 			isa = PBXGroup;
 			children = (
+				9C5BDE8B2062E87C00DFF64C /* magic.mgc */,
 				9CA9D67D1F52461B00BE1277 /* devices */,
 			);
 			path = res;
@@ -348,6 +351,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C5BDE8C2062E88C00DFF64C /* magic.mgc in Resources */,
 				9CA9D6C31F52461B00BE1277 /* iPad4,4.png in Resources */,
 				9CA9D6CA1F52461B00BE1277 /* iPad6,3.png in Resources */,
 				9CA9D6D91F52461B00BE1277 /* iPhone5,3.png in Resources */,
