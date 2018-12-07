@@ -269,20 +269,22 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                             let unsortedFilePath = subFolderPath + "/" + file
 
                             // lookup mime_type using magic.h library
-                            let magic_full = magic_file(magic_cookie, unsortedFilePath);
-                            let type = String.init(cString: magic_full!)
-
-                            let ext = self.selectableView!.parse(type)
-                            //lif the extension exists, copy the file into the destination folder
-                            if ext != nil
+                            if let magic_full = magic_file(magic_cookie, unsortedFilePath)
                             {
-                                let targetPath = exportPath + "/" + file + "." + ext!
+                                let type = String.init(cString: magic_full)
 
-                                if FileManager.default.fileExists(atPath: unsortedFilePath) {
-                                    do {
-                                        try FileManager.default.copyItem(atPath: unsortedFilePath, toPath: targetPath)
+                                let ext = self.selectableView!.parse(type)
+                                //lif the extension exists, copy the file into the destination folder
+                                if ext != nil
+                                {
+                                    let targetPath = exportPath + "/" + file + "." + ext!
 
-                                    } catch {
+                                    if FileManager.default.fileExists(atPath: unsortedFilePath) {
+                                        do {
+                                            try FileManager.default.copyItem(atPath: unsortedFilePath, toPath: targetPath)
+
+                                        } catch {
+                                        }
                                     }
                                 }
                             }
