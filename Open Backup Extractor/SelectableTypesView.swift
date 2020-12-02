@@ -81,7 +81,7 @@ class SelectableTypesView : NSView
         {
             if self.subviews[x] is NSButton
             {
-                enabledTypes[x] = (self.subviews[x] as! NSButton).state == 1
+                enabledTypes[x] = (self.subviews[x] as! NSButton).state.rawValue == 1
             }
         }
     }

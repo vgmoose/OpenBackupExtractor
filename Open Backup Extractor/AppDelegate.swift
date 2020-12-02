@@ -19,17 +19,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	
 	@IBAction func openHelp(_ sender: NSMenuItem)
 	{
-		self.mainViewController!.getHelp(sender: sender)
+        self.mainViewController!.getHelp(sender)
 	}
 	
 	func dialogOKCancel(question: String, text: String) -> Bool {
 		let alert = NSAlert()
 		alert.messageText = question
 		alert.informativeText = text
-		alert.alertStyle = NSAlertStyle.warning
+        alert.alertStyle = NSAlert.Style.warning
 		alert.addButton(withTitle: "OK")
 		alert.addButton(withTitle: "Cancel")
-		return alert.runModal() == NSAlertFirstButtonReturn
+        return alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn
 	}
 	
 	@IBAction func promptDirectory(_ sender: Any)
@@ -42,7 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		openPanel.canCreateDirectories = true
 		openPanel.canChooseFiles = false
 		openPanel.begin { (result) -> Void in
-			if result == NSFileHandlingPanelOKButton {
+            if result.rawValue == NSFileHandlingPanelOKButton {
 				vc.ITUNES_BACKUP_PATH = "\((openPanel.url?.path)!)/"
 				vc.refreshDevices()
 			}

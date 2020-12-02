@@ -38,7 +38,7 @@ class DeviceCellView : NSTableCellView
 	override func awakeFromNib()
 	{
 		// find the parent view controller
-		let appDelegate = NSApplication.shared().delegate as! AppDelegate
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
 		let parent = appDelegate.mainViewController!
 		
 		// find our current index

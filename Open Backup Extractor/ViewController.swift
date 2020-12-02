@@ -65,7 +65,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 		chdir(Bundle.main.bundlePath)
 		
 		// set this view controller to the app delegate
-		let appDelegate = NSApplication.shared().delegate as! AppDelegate
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
 		appDelegate.mainViewController = self
 
 		// set the height of every cell in the table
@@ -326,7 +326,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 		openPanel.canCreateDirectories = true
 		openPanel.canChooseFiles = false
 		openPanel.begin { (result) -> Void in
-			if result == NSFileHandlingPanelOKButton {
+            if result.rawValue == NSFileHandlingPanelOKButton {
 				self.exportFolderPathField.stringValue = (openPanel.url?.path)!
 				self.changeState(self.PATH_SELECTED)
 			}
@@ -350,7 +350,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 	@IBAction func openSourceCode(_ sender: NSButton)
 	{
 		// open up the source page for this project
-		NSWorkspace.shared().open(URL(string: "https://github.com/vgmoose/openbackupextractor")!)
+        NSWorkspace.shared.open(URL(string: "https://github.com/vgmoose/openbackupextractor")!)
 	}
 	
 	// display alert (from https://stackoverflow.com/a/29433631/1137828 )
